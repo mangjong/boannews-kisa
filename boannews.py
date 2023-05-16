@@ -70,7 +70,8 @@ while True:
     new_links = get_news_list()
     if len(new_links) == 0:
         print("No new links found.")
-   
+        time.sleep(60)
+        #break   
     else:
         for link, index in new_links:
             crawl(index)
