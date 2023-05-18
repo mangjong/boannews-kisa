@@ -23,14 +23,12 @@ def get_article(article_url):
 
     article_title = soup.find('div', id='news_title02').find('h1').get_text().strip()
     article_summary = soup.find('div', id ='news_content').find('b').get_text('\n ').strip()
-    article_time = soup.find('div', id='news_util01').get_text().strip()[8:]
-    article_body = soup.find('div', id='news_content').get_text().strip()    
+    article_time = soup.find('div', id='news_util01').get_text().strip()[8:]    
 
     print("주소:", article_url)
     print("제목:", article_title)
     print("부제:", "\n", article_summary)
     print("시간:", article_time, "\n")
-    # print("내용:", article_body)
 
 # 신규 기사 내용 불러오기
 def crawl(index):
@@ -41,15 +39,14 @@ def crawl(index):
     except AttributeError:
         print("Error : Article not found for index", index)
 
-
 # 보안뉴스 전체기사 1 페이지 기준으로 전체 링크 수집 및 저장, 신규 링크에 대한 값 반환
 def get_news_list():
     article_links = [link['href'] for link in soup.select('div.news_list a')]
 
     saved_links = set()
 
-    if os.path.isfile("saved_links.txt"):
-        with open("saved_links.txt", "r") as f:
+    if os.path.isfile("saved_boan_links.txt"):
+        with open("saved_boan_links.txt", "r") as f:
             saved_links = set([line.strip() for line in f.readlines()])
 
     new_links = []
@@ -61,17 +58,18 @@ def get_news_list():
         if full_link not in saved_links:
             new_links.append((full_link, index))
             saved_links.add(full_link)
-    with open("saved_links.txt", "w") as f:
+    with open("saved_boan_links.txt", "w") as f:
         f.write("\n".join(saved_links))
-
     return new_links
 
-while True:
+def main():
     new_links = get_news_list()
+
     if len(new_links) == 0:
         print("No new links found.")
-        time.sleep(60)
-        #break   
     else:
         for link, index in new_links:
             crawl(index)
+
+if __name__ == '__main__':
+    main()
