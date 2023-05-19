@@ -1,3 +1,4 @@
+#! /usr/bin/env python3
 import requests
 import urllib3
 import re
@@ -22,8 +23,8 @@ def get_kisa_list():
 
     saved_kisa_links = set()
 
-    if os.path.isfile("test_kisa_links.txt"):
-        with open("test_kisa_links.txt", "r") as f:
+    if os.path.isfile("save_kisa_links.txt"):
+        with open("save_kisa_links.txt", "r") as f:
             saved_kisa_links = set([line.strip() for line in f.readlines()])
 
     new_kisa_links = []
@@ -34,7 +35,7 @@ def get_kisa_list():
         if full_link not in saved_kisa_links:
             new_kisa_links.append(full_link)
             saved_kisa_links.add(full_link)
-    with open("test_kisa_links.txt", "w") as f:
+    with open("save_kisa_links.txt", "w") as f:
         f.write("\n".join(saved_kisa_links))
 
     return new_kisa_links
