@@ -23,8 +23,8 @@ def get_kisa_list():
 
     saved_kisa_links = set()
 
-    if os.path.isfile("save_kisa_links.txt"):
-        with open("save_kisa_links.txt", "r") as f:
+    if os.path.isfile("saved_kisa_links.txt"):
+        with open("saved_kisa_links.txt", "r") as f:
             saved_kisa_links = set([line.strip() for line in f.readlines()])
 
     new_kisa_links = []
@@ -35,15 +35,15 @@ def get_kisa_list():
         if full_link not in saved_kisa_links:
             new_kisa_links.append(full_link)
             saved_kisa_links.add(full_link)
-    with open("save_kisa_links.txt", "w") as f:
+    with open("saved_kisa_links.txt", "w") as f:
         f.write("\n".join(saved_kisa_links))
 
     return new_kisa_links
 
 
 def telegram(link):
-    TOKEN = '6163874026:AAGHeN5WB6LmRs--qz5oRsqgSsHqDa17bN0'
-    CHAT_ID = '758537909'
+    TOKEN = 'Your Token'
+    CHAT_ID = 'Your Chat ID'
     bot = telepot.Bot(token=TOKEN)
     cnt = len(link)
     
