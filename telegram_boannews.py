@@ -37,7 +37,7 @@ def get_news_list():
         full_link = f"https://www.boannews.com/{link}"
     
         if full_link not in saved_links:
-            new_links.append((full_link))
+            new_links.append(full_link)
             saved_links.add(full_link)
     with open("saved_boan_links.txt", "w") as f:
         f.write("\n".join(saved_links))
