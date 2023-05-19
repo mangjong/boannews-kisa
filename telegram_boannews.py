@@ -34,11 +34,10 @@ def get_news_list():
     new_links = []
 
     for link in article_links:
-        index = re.search(r'\d+', link).group()
         full_link = f"https://www.boannews.com/{link}"
     
         if full_link not in saved_links:
-            new_links.append((full_link, index))
+            new_links.append((full_link))
             saved_links.add(full_link)
     with open("saved_boan_links.txt", "w") as f:
         f.write("\n".join(saved_links))
@@ -54,7 +53,7 @@ def telegram(link):
    
     bot.sendMessage(CHAT_ID, text=INFO)
 
-    for url, index in link:
+    for url in link:
         bot.sendMessage(CHAT_ID, text=url)
 
 def main():
