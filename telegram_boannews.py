@@ -49,7 +49,7 @@ def telegram(link):
     bot = telepot.Bot(token=TOKEN)
     cnt = len(link)
     
-    INFO = "보안뉴스에 새로운 뉴스는 {}개 입니다.".format(cnt)
+    INFO = "[★] 보안뉴스에 새로운 뉴스는 {}개 입니다.".format(cnt)
    
     bot.sendMessage(CHAT_ID, text=INFO)
 
