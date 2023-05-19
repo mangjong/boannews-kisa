@@ -54,12 +54,15 @@ def telegram(link):
     bot.sendMessage(CHAT_ID, text=INFO)
 
     for url in link:
-        response = requests.get(url, headers=headers, verify=False)
-        soup = BeautifulSoup(response.text, "html.parser")
-        title = soup.find('div', id="news_title02").find('h1').get_text()
-        
-        BOAN_TITLE = "제목 : {}".format(title)
         BOAN_LINK = "링크 : {}".format(url)
+        try:
+            response = requests.get(url, headers=headers, verify=False)
+            soup = BeautifulSoup(response.text, "html.parser")
+            title = soup.find('div', id="news_title02").find('h1').get_text().strip()
+        except AttributeError:
+            print("[*] 내용을 확인하기 위해서는 로그인이 필요합니다.")
+        BOAN_TITLE = "제목 : {}".format(title)
+        
         bot.sendMessage(CHAT_ID, text=BOAN_TITLE)
         bot.sendMessage(CHAT_ID, text=BOAN_LINK)
 
