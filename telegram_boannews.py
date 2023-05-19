@@ -54,7 +54,14 @@ def telegram(link):
     bot.sendMessage(CHAT_ID, text=INFO)
 
     for url in link:
-        bot.sendMessage(CHAT_ID, text=url)
+        response = requests.get(url, headers=headers, verify=False)
+        soup = BeautifulSoup(response.text, "html.parser")
+        title = soup.find('div', id="news_title02").find('h1').get_text()
+        
+        BOAN_TITLE = "제목 : {}".format(title)
+        BOAN_LINK = "링크 : {}".format(url)
+        bot.sendMessage(CHAT_ID, text=BOAN_TITLE)
+        bot.sendMessage(CHAT_ID, text=BOAN_LINK)
 
 def main():
     new_links = get_news_list()
