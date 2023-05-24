@@ -65,6 +65,7 @@ def telegram(link):
         
         bot.sendMessage(CHAT_ID, text=BOAN_TITLE)
         bot.sendMessage(CHAT_ID, text=BOAN_LINK)
+        time.sleep(0.5)
 
 def main():
     new_links = get_news_list()
