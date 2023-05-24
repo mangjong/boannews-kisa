@@ -47,9 +47,16 @@ def crawl(url):
     soup = BeautifulSoup(response.text, "html.parser")
     title = soup.find('div', class_="b_title").find('h2').get_text()
     date = soup.find('div', class_="b_title").find('span').get_text()
+    cve_tmp = set(re.findall(r'CVE\-\d{4}\-\d{4,5}', cve_data))
+    cve_list = ', '.join(cve_tmp)
     print("보안권고문:", title)
     print("공지일:", date)
-
+    
+    if len(cve_tmp) != 0:
+        print(f"CVE 리스트 :\n {cve_list}\n")
+    else:
+        pass
+    
 new_links = get_kisa_list()
 if len(new_links) == 0:
     pass
