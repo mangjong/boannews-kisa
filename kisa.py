@@ -47,15 +47,40 @@ def crawl(url):
     soup = BeautifulSoup(response.text, "html.parser")
     title = soup.find('div', class_="b_title").find('h2').get_text()
     date = soup.find('div', class_="b_title").find('span').get_text()
-    cve_tmp = set(re.findall(r'CVE\-\d{4}\-\d{4,5}', cve_data))
-    cve_list = ', '.join(cve_tmp)
+    cve_data = soup.find('div', class_="content_html").get_text().strip()
+    cve_list = sorted(set(re.findall(r'CVE\-\d{4}\-\d{4,5}', cve_data)))
+    cve_code = ', '.join(cve_list)
     print("보안권고문:", title)
     print("공지일:", date)
     
-    if len(cve_tmp) != 0:
-        print(f"CVE 리스트 :\n {cve_list}\n")
+    if len(cve_list) != 0:
+        print(f"CVE 리스트 :\n {cve_code}\n")
+        get_cvss(cve_list)
     else:
         pass
+
+def get_cvss(cve_list):
+    
+    for list in cve_list:
+        nist_url = f'https://nvd.nist.gov/vuln/detail/{list}'
+        response = requests.get(nist_url, verify=False)
+        if response.status_code == 200:
+            if 'CVE ID Not Found' not in response.text:
+                soup = BeautifulSoup(response.text, "html.parser")
+                try:
+                    score = soup.select_one('#Cvss3CnaCalculatorAnchor').text
+                    print(f"* Code & Score : {list} & {score}")
+                except:
+                    try:
+                        score = soup.select_one('#Cvss3NistCalculatorAnchor').text
+                        print(f"* Code & Score : {list} & {score}")
+                    except:
+                        score = soup.select_one('#Cvss3NistCalculatorAnchorNA').text
+                        print(f"* Code & Score : {list} & {score}")
+            else:
+                print(f"* Code & Score : {list} is Not Found ")
+        else:  
+            print(f'NIST URL of {list} is Not Found')
     
 new_links = get_kisa_list()
 if len(new_links) == 0:
