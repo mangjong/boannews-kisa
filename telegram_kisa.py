@@ -1,10 +1,8 @@
 #! /usr/bin/env python3
 import requests
 import urllib3
-import re
 import os
 from bs4 import BeautifulSoup
-import time
 import telepot
 
 urllib3.disable_warnings(urllib3.exceptions.InsecureRequestWarning)
