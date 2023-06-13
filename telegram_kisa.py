@@ -7,7 +7,6 @@ import telepot
 
 urllib3.disable_warnings(urllib3.exceptions.InsecureRequestWarning)
 
-
 url = "https://krcert.or.kr/kr/bbs/list.do?menuNo=205020&bbsId=B0000133"
 headers = {
     "User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/112.0.0.0 Whale/3.20.182.14 Safari/537.36",
@@ -37,7 +36,6 @@ def get_kisa_list():
         f.write("\n".join(saved_kisa_links))
 
     return new_kisa_links
-
 
 def telegram(link):
     TOKEN = 'Your Token'
