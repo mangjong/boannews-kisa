@@ -3,10 +3,8 @@ import urllib3
 import re
 import os
 from bs4 import BeautifulSoup
-import time
 
 urllib3.disable_warnings(urllib3.exceptions.InsecureRequestWarning)
-
 
 url = "https://krcert.or.kr/kr/bbs/list.do?menuNo=205020&bbsId=B0000133"
 headers = {
@@ -18,10 +16,10 @@ def get_kisa_list():
     response = requests.get(url, headers=headers, verify=False)
     soup = BeautifulSoup(response.text, "html.parser")
     
-    article_index = [index.text.strip() for index in soup.select("tbody td.num")]
-    article_title = [title.find('a').text.strip() for title in soup.select("tbody td.sbj.tal")]
+    #article_index = [index.text.strip() for index in soup.select("tbody td.num")]
+    #article_title = [title.find('a').text.strip() for title in soup.select("tbody td.sbj.tal")]
     article_link = [link.find('a')['href'] for link in soup.select("tbody td.sbj.tal")]
-    article_date = [date.text.strip() for date in soup.select("tbody td.date")]
+    #article_date = [date.text.strip() for date in soup.select("tbody td.date")]
 
     saved_kisa_links = set()
 
@@ -60,7 +58,6 @@ def crawl(url):
         pass
 
 def get_cvss(cve_list):
-    
     for list in cve_list:
         nist_url = f'https://nvd.nist.gov/vuln/detail/{list}'
         response = requests.get(nist_url, verify=False)
@@ -69,19 +66,19 @@ def get_cvss(cve_list):
                 soup = BeautifulSoup(response.text, "html.parser")
                 try:
                     score = soup.select_one('#Cvss3CnaCalculatorAnchor').text
-                    print(f"* Code & Score : {list} & {score}")
+                    print(f"* Code & Score : {list} & {score}\n")
                 except:
                     try:
                         score = soup.select_one('#Cvss3NistCalculatorAnchor').text
-                        print(f"* Code & Score : {list} & {score}")
+                        print(f"* Code & Score : {list} & {score}\n")
                     except:
                         score = soup.select_one('#Cvss3NistCalculatorAnchorNA').text
-                        print(f"* Code & Score : {list} & {score}")
+                        print(f"* Code & Score : {list} & {score}\n")
             else:
-                print(f"* Code & Score : {list} is Not Found ")
+                print(f"* Code & Score : {list} is Not Found \n")
         else:  
-            print(f'NIST URL of {list} is Not Found')
-    
+            print(f'NIST URL of {list} is Not Found\n')
+ 
 new_links = get_kisa_list()
 if len(new_links) == 0:
     pass
