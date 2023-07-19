@@ -3,7 +3,7 @@ import requests
 import urllib3
 import os
 from bs4 import BeautifulSoup
-import telepot
+import telegram
 
 urllib3.disable_warnings(urllib3.exceptions.InsecureRequestWarning)
 
@@ -40,7 +40,7 @@ def get_kisa_list():
 def telegram(link):
     TOKEN = 'Your Token'
     CHAT_ID = 'Your Chat ID'
-    bot = telepot.Bot(token=TOKEN)
+    bot = telegram.Bot(token=TOKEN)
     cnt = len(link)
     
     INFO = "[★] KISA에 공지된 보안권고문은 {}개 입니다.".format(cnt)
