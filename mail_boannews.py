@@ -90,7 +90,6 @@ def send_mail(new_links, to_mail):
     #Config / Mail List, basic content
     from_name = "YOUR NAME"
     from_mail = 'YOUR FROM MAIL'
-    #to_mail = 'YOUR TO MAIL'
     app_key = 'YOUR APP KEY'
 
     smtp = smtplib.SMTP('smtp.gmail.com', 587)
