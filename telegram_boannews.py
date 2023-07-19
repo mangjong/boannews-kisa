@@ -6,7 +6,7 @@ import re
 import os
 from bs4 import BeautifulSoup
 import time
-import telepot
+import telegram
 
 urllib3.disable_warnings(urllib3.exceptions.InsecureRequestWarning)
 
@@ -46,7 +46,7 @@ def get_news_list():
 def telegram(link):
     TOKEN = 'Your Token'
     CHAT_ID = 'Your CHAT_ID'
-    bot = telepot.Bot(token=TOKEN)
+    bot = telegram.Bot(token=TOKEN)
     cnt = len(link)
     
     INFO = "[★] 보안뉴스에 새로운 뉴스는 {}개 입니다.".format(cnt)
