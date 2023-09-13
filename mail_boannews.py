@@ -32,7 +32,7 @@ def get_article(new_links):
                 continue
             
             soup = BeautifulSoup(response.text, "html.parser")
-            article_time = soup.find('div', id='news_util01').get_text().strip()[8:]
+            article_time = soup.find('div', id='news_util01').get_text().strip()[5:]
             article_title = soup.find('div', id='news_title02').find('h1').get_text().strip()
 
             try:
