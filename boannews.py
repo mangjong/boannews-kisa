@@ -23,7 +23,7 @@ def get_article(article_url):
 
     article_title = soup.find('div', id='news_title02').find('h1').get_text().strip()
     article_summary = soup.find('div', id ='news_content').find('b').get_text('\n ').strip()
-    article_time = soup.find('div', id='news_util01').get_text().strip()[8:]    
+    article_time = soup.find('div', id='news_util01').get_text().strip()[5:]    
 
     print("주소:", article_url)
     print("제목:", article_title)
